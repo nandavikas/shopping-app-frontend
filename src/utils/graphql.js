@@ -1,14 +1,11 @@
 import {gql} from "@apollo/client";
 
+import {VARIABLES_TO_FETCH} from "../constants";
+
 const ITEMS_QUERY = gql`
     query GetItems($category: String, $pageNumber: Int) {
         getItems(category: $category, pageNumber: $pageNumber) {
-            category
-            description
-            item
-            stock
-            price
-            image
+            ${VARIABLES_TO_FETCH}
         }
     }
 `;

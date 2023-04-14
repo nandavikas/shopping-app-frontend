@@ -12,6 +12,7 @@ export default function MenuCard({name, description, image, price, stock, cartIt
     const onClickAdd = () => {
         if (cartItems[name]) {
             cartItems[name].quantity += 1;
+            setCartItems({...cartItems})
             return;
         }
         else {

@@ -1,3 +1,5 @@
+import React from "react";
+import {useNavigate} from "react-router-dom";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -5,8 +7,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import React from "react";
-import {useNavigate} from "react-router-dom";
+
+import {CATEGORIES} from "../constants";
 
 
 export default function SideBar({open, setOpen}) {
@@ -28,7 +30,7 @@ export default function SideBar({open, setOpen}) {
             }}
         >
             <List>
-                {['Vegetables', 'Fruits', 'Cheese'].map((text, index) => (
+                {CATEGORIES.map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton onClick={() => navigate(`/${text}`)}>
                             <ListItemText primary={text}/>

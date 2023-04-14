@@ -1,22 +1,22 @@
 import React from 'react';
+import {useQuery} from "@apollo/client";
 import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid";
-import {useQuery} from "@apollo/client";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ArrowLeft from "@mui/icons-material/ArrowLeft";
 import ArrowRight from "@mui/icons-material/ArrowRight";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import MenuCard from "../../components/Card";
-import { ITEMS_QUERY } from "../../utils/graphql";
+import MenuCard from "../components/Card";
+import {ITEMS_QUERY} from "../utils/graphql";
 
-export default function Cheese({ cartItems, setCartItems }) {
+export default function Product({cartItems, setCartItems, pageName, category}) {
 
     const [pageNumber, setPageNumber] = React.useState(0);
 
     const {data, loading, error} = useQuery(ITEMS_QUERY, {
-        variables: {category: "Fruit", pageNumber},
+        variables: {category, pageNumber},
     });
 
     const onClickNext = () => {
@@ -31,18 +31,28 @@ export default function Cheese({ cartItems, setCartItems }) {
     }
 
     if (loading) {
-        return <CircularProgress color="secondary" />
+        return <CircularProgress color="secondary"/>
+    }
+
+    if (error) {
+        return <Typography variant={"h4"}
+                           sx={{
+                               color: "gray",
+                               display: "flex",
+                               justifyContent: "center",
+                               marginTop: "15px"
+                           }}>Error fetching data. Please try later</Typography>
     }
 
     return (
-        <Box>
+        <Box key={pageName}>
             <Typography variant={"h4"}
                         sx={{
                             color: "gray",
                             display: "flex",
                             justifyContent: "center",
-                            // marginTop: "15px"
-                        }}>Shop from wide-range of Cheese</Typography>
+                            marginTop: "15px"
+                        }}>Shop from wide-range of {pageName}</Typography>
             <Grid container spacing={6}
                   sx={{marginTop: '10px', marginBottom: '50px'}}
                   justifyContent="center">
@@ -61,9 +71,11 @@ export default function Cheese({ cartItems, setCartItems }) {
                     )
                 })}
             </Grid>
-            <Box sx={{ marginBottom: '25px', display: 'flex', justifyContent: 'center'}}>
-                <Button onClick={onClickPrevious} variant="outlined" color="secondary" sx={{ width: '175px', color: '#a35a60' }}><ArrowLeft />Previous</Button>
-                <Button onClick={onClickNext} variant="outlined" color="secondary" sx={{ width: '175px', color: '#a35a60' }}>Next<ArrowRight /></Button>
+            <Box sx={{marginBottom: '25px', display: 'flex', justifyContent: 'center'}}>
+                <Button onClick={onClickPrevious} variant="outlined" color="secondary"
+                        sx={{width: '175px', color: '#a35a60'}}><ArrowLeft/>Previous</Button>
+                <Button onClick={onClickNext} variant="outlined" color="secondary"
+                        sx={{width: '175px', color: '#a35a60'}}>Next<ArrowRight/></Button>
             </Box>
         </Box>
     )

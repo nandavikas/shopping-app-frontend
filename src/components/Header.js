@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import nanda from "../assets/nanda.jpg";
 
 export default function Header({ handleMenuClick, setCartOpen }) {
+
+    const navigate = useNavigate();
 
     const handleCartClick = (event) => {
         setCartOpen(true);
@@ -27,13 +30,17 @@ export default function Header({ handleMenuClick, setCartOpen }) {
                         color="inherit"
                         aria-label="menu"
                         sx={{mr: 2}}
+                        onClick={handleMenuClick}
                     >
-                        <MenuIcon onClick={handleMenuClick}/>
+                        <MenuIcon/>
                     </IconButton>
                     <img src="https://www.jacando.com/wp-content/uploads/2021/01/jacando_logo_neg.png"
-                         style={{width: '145px', height: '35px'}}/>
+                         style={{width: '145px', height: '35px' }}
+                         onClick={(e) => navigate('/')}
+                         alt={"Jacando"}
+                    />
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}/>
-                    <ShoppingCartIcon sx={{marginRight: '20px'}} onClick={handleCartClick}/>
+                    <ShoppingCartIcon sx={{marginRight: '20px',":hover": { cursor: "pointer" } }} onClick={handleCartClick}/>
                     <Box sx={{flexGrow: 0}}>
                         <IconButton sx={{p: 0}}>
                             <Avatar alt="Nanda" src={nanda}/>
